@@ -1,3 +1,4 @@
+import { Card } from "../../FilterPanel";
 export default function ZoneCard() {
-  return <></>;
+  return <Card>1 этаж</Card>;
 }

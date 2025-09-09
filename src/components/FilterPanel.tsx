@@ -11,9 +11,25 @@ export default function FilterPanel() {
     </Wrapper>
   );
 }
+export const Card = styled.button`
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.04);
+  height: 36px;
+`;
+
+export const FilterName = styled.div`
+  color: rgba(255, 255, 255, 0.64);
+  margin-bottom: 4px;
+  line-height: 14px;
+`;
 const Wrapper = styled.section`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding-top: 32px;
   column-gap: 16px;
 `;
@@ -21,4 +37,5 @@ const Heading = styled.h2`
   font-size: 20px;
   font-weight: 600;
   line-height: 28px;
+  margin-bottom: 16px;
 `;
