@@ -32,33 +32,48 @@ for (let i = openTime; i < closeTime; i += 30) {
 console.log(timeArr);
 
 const { tables } = ExampleTables;
-
+console.log(tables.length);
 export default function MainTable() {
   return (
     <Wrapper className="container">
-      <BoardWrapper>
+      <XWrapper>
         <TimeBar>
           {timeArr.map((time) => {
             return <TimesCeil key={time}>{time}</TimesCeil>;
           })}
         </TimeBar>
-        <Board>
-          {tables.map((table) => {
-            return <TablesCeil key={table.id} data={table}></TablesCeil>;
-          })}
-        </Board>
-      </BoardWrapper>
+        <YWrapper>
+          <TableBar>
+            {tables.map((table) => {
+              return <TablesCeil key={table.id} data={table}></TablesCeil>;
+            })}
+          </TableBar>
+          <Board></Board>
+        </YWrapper>
+      </XWrapper>
     </Wrapper>
   );
 }
 const Wrapper = styled.div`
   overflow: hidden;
 `;
+const TableBar = styled.div`
+  display: flex;
+  position: sticky;
+  top: 0;
+  background-color: #1b1b1d;
+  padding-left: 40px;
+  margin-left: -40px;
+`;
+const YWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+`;
 const Board = styled.div`
   display: grid;
   grid-auto-rows: 40px;
   grid-auto-columns: 80px;
-  padding-right: 20px;
   background-attachment: local;
   background-image: linear-gradient(
       to right,
@@ -68,27 +83,26 @@ const Board = styled.div`
     linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 80px 40px, 80px 40px;
   background-position: 80px 0, 0 40px;
-  grid-template-rows: repeat(26, 40px);
-  grid-template-columns: repeat(auto-fit, 80px);
+  grid-template-rows: repeat(${diff + 1}, 40px);
+  grid-template-columns: repeat(${tables.length}, 80px);
 `;
-const BoardWrapper = styled.div`
+const XWrapper = styled.div`
   display: flex;
   overflow: scroll;
   height: 70vh;
+  scrollbar-width: thin;
 `;
 const TimeBar = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #1b1b1d;
   width: 32px;
   position: sticky;
-  left: 10px;
+  left: 0;
+  padding-top: 40px;
+  height: fit-content;
 `;
 const TimesCeil = styled.div`
   font-size: 11px;
   color: rgba(255, 255, 255, 0.48);
-  padding-top: 40px;
-  height: 40px;
-  padding-right: 1px;
-  margin-right: -1px;
+  min-height: 40px;
 `;

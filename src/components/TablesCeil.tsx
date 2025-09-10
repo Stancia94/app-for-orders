@@ -21,7 +21,7 @@ export default function TablesCeil({ data }: { data: Table }) {
       </div>
       <div>{data.capacity} чел</div>
       <div style={{ gridColumn: "span 2" }}>
-        {data.zone == "Банкетный зал" ? "Банк.зал" : data.zone}
+        {data.zone === "Банкетный зал" ? "Банк.зал" : data.zone}
       </div>
     </Table>
   );
@@ -33,10 +33,8 @@ const Table = styled.div`
   color: rgba(255, 255, 255, 0.64);
   font-size: 11px;
   justify-items: center;
-  gap: 0;
-  position: sticky;
-  top: 0;
-  background-color: #1b1b1d;
+
   z-index: 20;
   padding-top: 5px;
+  width: 80px;
 `;
