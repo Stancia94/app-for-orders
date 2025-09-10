@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import ExampleTables from "../ExampleTables.json";
+import TablesCeil from "./TablesCeil";
 type Times = {
   restaurant: {
-    opening_time: string; // Время открытия (на основе этого строится таблица)
-    closing_time: string; // Время закрытия (на основе этого строится таблица)
+    opening_time: string;
+    closing_time: string;
   };
 };
 const mokdata: Times = {
@@ -18,7 +20,6 @@ function toMinutes(time: string) {
 }
 const openTime = toMinutes(mokdata.restaurant.opening_time);
 const closeTime = toMinutes(mokdata.restaurant.closing_time);
-console.log(openTime);
 const diff = Math.floor((closeTime - openTime) / 30);
 const timeArr: string[] = [];
 
@@ -29,21 +30,65 @@ for (let i = openTime; i < closeTime; i += 30) {
   timeArr.push(time);
 }
 console.log(timeArr);
+
+const { tables } = ExampleTables;
+
 export default function MainTable() {
   return (
-    <Table>
-      {diff}
-      {timeArr.map((time) => {
-        return <TimesCeil>{time}</TimesCeil>;
-      })}
-    </Table>
+    <Wrapper className="container">
+      <BoardWrapper>
+        <TimeBar>
+          {timeArr.map((time) => {
+            return <TimesCeil key={time}>{time}</TimesCeil>;
+          })}
+        </TimeBar>
+        <Board>
+          {tables.map((table) => {
+            return <TablesCeil key={table.id} data={table}></TablesCeil>;
+          })}
+        </Board>
+      </BoardWrapper>
+    </Wrapper>
   );
 }
-const Table = styled.div`
+const Wrapper = styled.div`
+  overflow: hidden;
+`;
+const Board = styled.div`
   display: grid;
   grid-auto-rows: 40px;
-  grid-template-columns: repeat(auto-fill, 80px);
+  grid-auto-columns: 80px;
+  padding-right: 20px;
+  background-attachment: local;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 80px 40px, 80px 40px;
+  background-position: 80px 0, 0 40px;
+  grid-template-rows: repeat(26, 40px);
+  grid-template-columns: repeat(auto-fit, 80px);
+`;
+const BoardWrapper = styled.div`
+  display: flex;
+  overflow: scroll;
+  height: 70vh;
+`;
+const TimeBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #1b1b1d;
+  width: 32px;
+  position: sticky;
+  left: 10px;
 `;
 const TimesCeil = styled.div`
-  grid-column: 1;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.48);
+  padding-top: 40px;
+  height: 40px;
+  padding-right: 1px;
+  margin-right: -1px;
 `;
