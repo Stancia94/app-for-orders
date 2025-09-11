@@ -5,12 +5,6 @@ type Table = {
   capacity: number;
   number: string;
   zone: string;
-  orders: {
-    id: string;
-    status: string;
-    start_time: string;
-    end_time: string;
-  }[];
 };
 
 export default function TablesCeil({ data }: { data: Table }) {
