@@ -32,7 +32,7 @@ for (let i = opentTimeRestaurant; i < closeTime; i += 30) {
 const { tables } = ExampleTables;
 const timeScale = 40 / 30;
 
-let tablesFormat = tables.map((table) => ({
+const tablesFormat = tables.map((table) => ({
   ...table,
   orders: table.orders.map((order) => ({
     ...order,
@@ -69,6 +69,7 @@ export default function MainTable() {
         <YWrapper>
           <TableBar>
             {tables.map((table) => {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               const { orders, ...rest } = table;
               return <TablesCeil key={table.id} data={rest}></TablesCeil>;
             })}

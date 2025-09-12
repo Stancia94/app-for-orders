@@ -80,7 +80,7 @@ const OrderWrapper = styled.div`
   padding-left: 4px;
   cursor: pointer;
   &:hover {
-    z-index: 100;
+    z-index: 5;
     backdrop-filter: blur(8px);
   }
 `;

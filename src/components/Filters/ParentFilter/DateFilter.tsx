@@ -1,4 +1,3 @@
-import { useState } from "react";
 import DateCard from "../ChildFIlter/DateCard";
 import { MONTHS_GENITIVE } from "../../../constant";
 import styled from "styled-components";
@@ -7,23 +6,14 @@ type AvailableDate = {
   available_days: string[];
 };
 const mokdata: AvailableDate = {
-  available_days: [
-    "2025-04-04",
-    "2025-04-05",
-    "2025-04-06",
-    "2025-04-07",
-    "2025-04-08",
-  ],
+  available_days: ["2025-04-04", "2025-04-05", "2025-04-06", "2025-04-07", "2025-04-08"],
 };
 mokdata.available_days = mokdata.available_days.map((date) => {
   const parseDateArr = date.split("-");
-  const parsedDate = `${parseInt(parseDateArr[2])} ${
-    MONTHS_GENITIVE[parseInt(parseDateArr[1]) - 1]
-  }`;
+  const parsedDate = `${parseInt(parseDateArr[2])} ${MONTHS_GENITIVE[parseInt(parseDateArr[1]) - 1]}`;
   return parsedDate;
 });
 export default function DateFilter() {
-  const [mokData, setMokData] = useState(mokdata);
   return (
     <Wrapper>
       <FilterName>Дата</FilterName>
