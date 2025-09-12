@@ -19,5 +19,8 @@ export default tseslint.config([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      "max-len": ["warn", { code: 150, ignoreUrls: true, ignoreStrings: true }],
+    },
   },
 ])

@@ -1,50 +1,53 @@
-import type { JSX } from "react";
 import styled from "styled-components";
-const order = {
-  id: "8ed4dfd6-ed9b-4230-9399-e271d2ba00d0",
-  status: "New",
-  start_time: "2025-04-04T12:32:47.885000+10:00",
-  end_time: "2025-04-04T13:01:41.598000+10:00",
+import { getOriginalTime } from "../utils";
+type OrderType = {
+  id: string;
+  status: string;
+  start_time: string;
+  end_time: string;
 };
-function renderOrder(status: string): JSX.Element | null {
-  switch (status) {
+type OrderProps = {
+  data: OrderType;
+  style?: React.CSSProperties;
+};
+
+export default function Order({ data, style }: OrderProps) {
+  const time = getOriginalTime(data.start_time) + ":" + getOriginalTime(data.end_time);
+  switch (data.status) {
     case "New":
       return (
-        <OrderWrapper>
+        <OrderWrapper style={style}>
           <Name>Заказ</Name>
           <Status>Новый</Status>
-          <Time>13:00-14:00</Time>
+          <Time>{time}</Time>
         </OrderWrapper>
       );
     case "Bill":
       return (
-        <OrderWrapper>
+        <OrderWrapper style={style}>
           <Name>Заказ</Name>
           <StatusBill>Пречек</StatusBill>
-          <Time>13:00-14:00</Time>
+          <Time>{time}</Time>
         </OrderWrapper>
       );
     case "Closed":
       return (
-        <OrderWrapper>
+        <OrderWrapper style={style}>
           <Name>Заказ</Name>
           <Status>Закрытый</Status>
-          <Time>13:00-14:00</Time>
+          <Time>{time}</Time>
         </OrderWrapper>
       );
     case "Banquet":
       return (
-        <BanquetWrapper>
+        <BanquetWrapper style={style}>
           <Name>Банкет</Name>
-          <Time>13:00-14:00</Time>
+          <Time>{time}</Time>
         </BanquetWrapper>
       );
     default:
       return null;
   }
-}
-export default function Order() {
-  return renderOrder(order.status);
 }
 const Status = styled.div`
   font-size: 8px;
@@ -71,11 +74,15 @@ const OrderWrapper = styled.div`
   left: 0;
   top: 10px;
   width: 80px;
-  height: 40px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding-left: 4px;
+  cursor: pointer;
+  &:hover {
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
 `;
 const BanquetWrapper = styled(OrderWrapper)`
   background-color: rgba(179, 72, 247, 0.16);

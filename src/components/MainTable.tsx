@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ExampleTables from "../ExampleTables.json";
 import TablesCeil from "./TablesCeil";
 import Order from "./Order";
+import { toMinutes, getOriginalTime } from "../utils";
 type Times = {
   restaurant: {
     opening_time: string;
@@ -15,62 +16,47 @@ const mokdata: Times = {
     closing_time: "23:40", // Время закрытия (на основе этого строится таблица)
   },
 };
-function toMinutes(time: string) {
-  const [h, m] = time.split(":").map(Number);
-  return h * 60 + m;
-}
-const openTime = toMinutes(mokdata.restaurant.opening_time);
+
+const opentTimeRestaurant = toMinutes(mokdata.restaurant.opening_time);
 const closeTime = toMinutes(mokdata.restaurant.closing_time);
-const diff = Math.floor((closeTime - openTime) / 30);
+
+const diff = Math.floor((closeTime - opentTimeRestaurant) / 30);
 const timeArr: string[] = [];
 
-for (let i = openTime; i < closeTime; i += 30) {
+for (let i = opentTimeRestaurant; i < closeTime; i += 30) {
   const h = String(Math.trunc(i / 60));
   const m = String(i % 60).padStart(2, "0");
   const time = `${h}:${m}`;
   timeArr.push(time);
 }
-
-function getOriginalTime(iso: string): string {
-  const match = iso.match(/T(\d{2}:\d{2})/);
-  return match ? match[1] : "";
-}
 const { tables } = ExampleTables;
+const timeScale = 40 / 30;
 
-const allOrder = tables.reduce((acc, table) => {
-  acc = [...acc, ...table.orders];
-  return acc;
-}, [] as (typeof tables)[number]["orders"]);
-
-allOrder.map((order) => {
-  order.start_time = getOriginalTime(order.start_time);
-  order.end_time = getOriginalTime(order.end_time);
-});
-console.log(allOrder);
-
-type Table = (typeof tables)[number];
-
-const allTable = tables.reduce<Omit<Table, "orders">[]>((acc, table) => {
-  const { orders, ...rest } = table;
-  acc.push(rest);
-  return acc;
-}, []);
-
-const matrix = [];
-for (let i = 0; i < diff; i++) {
-  const row = new Array(allTable.length).fill(0);
-  matrix.push(row);
+let tablesFormat = tables.map((table) => ({
+  ...table,
+  orders: table.orders.map((order) => ({
+    ...order,
+    level: 0,
+    startTimeMinutes: toMinutes(getOriginalTime(order.start_time)),
+    endTimeMinutes: toMinutes(getOriginalTime(order.end_time)),
+  })),
+}));
+console.log(tablesFormat);
+for (let i = 0; i < tablesFormat.length; i++) {
+  for (let j = 0; j < tablesFormat[i].orders.length; j++) {
+    const currentOrder = tablesFormat[i].orders[j];
+    for (let x = j + 1; x < tablesFormat[i].orders.length; x++) {
+      const anotherOrder = tablesFormat[i].orders[x];
+      if (
+        currentOrder.startTimeMinutes < anotherOrder.endTimeMinutes &&
+        currentOrder.endTimeMinutes > anotherOrder.startTimeMinutes
+      ) {
+        anotherOrder.level = currentOrder.level + 1;
+      }
+    }
+  }
 }
-console.log(matrix);
-// [0][0]
-// [0][1]
-const matrixEx = [
-  //     индекс
-  // время [1, 2, 3],
-  [4, 3, 5],
-  [6, 7, 8],
-];
-
+console.log(tablesFormat);
 export default function MainTable() {
   return (
     <Wrapper className="container">
@@ -82,12 +68,34 @@ export default function MainTable() {
         </TimeBar>
         <YWrapper>
           <TableBar>
-            {allTable.map((table) => {
-              return <TablesCeil key={table.id} data={table}></TablesCeil>;
+            {tables.map((table) => {
+              const { orders, ...rest } = table;
+              return <TablesCeil key={table.id} data={rest}></TablesCeil>;
             })}
           </TableBar>
           <Board>
-            <Order></Order>
+            {tablesFormat.map((table) =>
+              table.orders.map((order) => {
+                const topOffset = order.startTimeMinutes - opentTimeRestaurant;
+                const heightOrder = order.endTimeMinutes - order.startTimeMinutes;
+                // в 40 пикселях 30 минут => 1минута = 40/30
+
+                const index = tables.findIndex((el) => el.id === table.id);
+                const leftOffset = index * 80;
+                return (
+                  <Order
+                    data={order}
+                    key={order.id}
+                    style={{
+                      top: `${topOffset * timeScale}px`,
+                      height: `${heightOrder * timeScale}px`,
+                      left: `${leftOffset + order.level * 4}px`,
+                      width: `${80 - order.level * 4}px`,
+                    }}
+                  ></Order>
+                );
+              })
+            )}
           </Board>
         </YWrapper>
       </XWrapper>
@@ -104,6 +112,7 @@ const TableBar = styled.div`
   background-color: #1b1b1d;
   padding-left: 40px;
   margin-left: -40px;
+  z-index: 10;
 `;
 const YWrapper = styled.div`
   display: flex;
@@ -114,11 +123,7 @@ const Board = styled.div`
   display: grid;
   background-attachment: local;
   position: relative;
-  background-image: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.1) 1px,
-      transparent 1px
-    ),
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 80px 40px, 80px 40px;
   background-position: 80px 0, 0 40px;
@@ -137,7 +142,7 @@ const TimeBar = styled.div`
   width: 32px;
   position: sticky;
   left: 0;
-  padding-top: 40px;
+  padding-top: 34px;
   height: fit-content;
 `;
 const TimesCeil = styled.div`
