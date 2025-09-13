@@ -79,9 +79,11 @@ const OrderWrapper = styled.div`
   align-items: flex-start;
   padding-left: 4px;
   cursor: pointer;
+  overflow: hidden;
   &:hover {
     z-index: 5;
     backdrop-filter: blur(8px);
+    width: 80px !important;
   }
 `;
 const BanquetWrapper = styled(OrderWrapper)`

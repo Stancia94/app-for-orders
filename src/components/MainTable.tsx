@@ -36,12 +36,14 @@ const tablesFormat = tables.map((table) => ({
   ...table,
   orders: table.orders.map((order) => ({
     ...order,
-    level: 0,
+    overlayLevel: 0,
+    leftLevel: 0,
+    intersectionLevel: 0,
     startTimeMinutes: toMinutes(getOriginalTime(order.start_time)),
     endTimeMinutes: toMinutes(getOriginalTime(order.end_time)),
   })),
 }));
-console.log(tablesFormat);
+
 for (let i = 0; i < tablesFormat.length; i++) {
   for (let j = 0; j < tablesFormat[i].orders.length; j++) {
     const currentOrder = tablesFormat[i].orders[j];
@@ -51,11 +53,26 @@ for (let i = 0; i < tablesFormat.length; i++) {
         currentOrder.startTimeMinutes < anotherOrder.endTimeMinutes &&
         currentOrder.endTimeMinutes > anotherOrder.startTimeMinutes
       ) {
-        anotherOrder.level = currentOrder.level + 1;
+        anotherOrder.overlayLevel = currentOrder.overlayLevel + 1;
       }
+      if (anotherOrder.startTimeMinutes - currentOrder.startTimeMinutes < 30) {
+        anotherOrder.leftLevel = currentOrder.leftLevel + 1;
+      }
+    }
+    let count = 1;
+    for (let k = 0; k < tablesFormat[i].orders.length; k++) {
+      const anotherOrder = tablesFormat[i].orders[k];
+      if (
+        Math.abs(anotherOrder.startTimeMinutes - currentOrder.startTimeMinutes) < 30 &&
+        anotherOrder !== currentOrder
+      ) {
+        count++;
+      }
+      currentOrder.intersectionLevel = count;
     }
   }
 }
+
 console.log(tablesFormat);
 export default function MainTable() {
   return (
@@ -80,9 +97,16 @@ export default function MainTable() {
                 const topOffset = order.startTimeMinutes - opentTimeRestaurant;
                 const heightOrder = order.endTimeMinutes - order.startTimeMinutes;
                 // в 40 пикселях 30 минут => 1минута = 40/30
-
                 const index = tables.findIndex((el) => el.id === table.id);
-                const leftOffset = index * 80;
+                let finalWidth, leftOffset;
+                if (order.intersectionLevel > 1) {
+                  finalWidth = (80 - order.overlayLevel * 4) / order.intersectionLevel;
+                  leftOffset = index * 80 + order.leftLevel * finalWidth + order.overlayLevel * 4;
+                  // 5 * 80 + 3 *
+                } else {
+                  finalWidth = 80 - order.overlayLevel * 4;
+                  leftOffset = index * 80 + order.overlayLevel * 4;
+                }
                 return (
                   <Order
                     data={order}
@@ -90,8 +114,8 @@ export default function MainTable() {
                     style={{
                       top: `${topOffset * timeScale}px`,
                       height: `${heightOrder * timeScale}px`,
-                      left: `${leftOffset + order.level * 4}px`,
-                      width: `${80 - order.level * 4}px`,
+                      left: `${leftOffset}px`,
+                      width: `${finalWidth}px`,
                     }}
                   ></Order>
                 );
