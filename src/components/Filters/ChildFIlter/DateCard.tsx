@@ -1,7 +1,20 @@
 import { Card } from "../../FilterPanel";
-type Date = {
+import { MONTHS_GENITIVE } from "../../../constant";
+type DateCardProps = {
   date: string;
+  onClick: () => void;
+  isActive: boolean;
 };
-export default function DateCard({ date }: Date) {
-  return <Card>{date}</Card>;
+function formatDate(date: string) {
+  const arr = date.split("-");
+  const month = +arr[1] - 1;
+  const day = +arr[2];
+  return `${day} ${MONTHS_GENITIVE[month]}`;
+}
+export default function DateCard({ date, onClick, isActive }: DateCardProps) {
+  return (
+    <Card $active={isActive} onClick={onClick}>
+      {formatDate(date)}
+    </Card>
+  );
 }

@@ -1,25 +1,28 @@
 import DateCard from "../ChildFIlter/DateCard";
-import { MONTHS_GENITIVE } from "../../../constant";
 import styled from "styled-components";
 import { FilterName } from "../../FilterPanel";
-type AvailableDate = {
-  available_days: string[];
-};
-const mokdata: AvailableDate = {
-  available_days: ["2025-04-04", "2025-04-05", "2025-04-06", "2025-04-07", "2025-04-08"],
-};
-mokdata.available_days = mokdata.available_days.map((date) => {
-  const parseDateArr = date.split("-");
-  const parsedDate = `${parseInt(parseDateArr[2])} ${MONTHS_GENITIVE[parseInt(parseDateArr[1]) - 1]}`;
-  return parsedDate;
-});
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../store";
+import { setDate } from "../../../sliceOrders";
+
 export default function DateFilter() {
+  const selectedDate = useSelector((state: RootState) => state.orders.current_day);
+  const availableDays = useSelector((state: RootState) => state.orders.available_days);
+  const dispatch = useDispatch();
   return (
     <Wrapper>
       <FilterName>Дата</FilterName>
+      {selectedDate}
       <List>
-        {mokdata.available_days.map((date) => {
-          return <DateCard date={date} key={date}></DateCard>;
+        {availableDays.map((date) => {
+          return (
+            <DateCard
+              isActive={date === selectedDate}
+              date={date}
+              key={date}
+              onClick={() => dispatch(setDate(date))}
+            ></DateCard>
+          );
         })}
       </List>
     </Wrapper>

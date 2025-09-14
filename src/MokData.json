@@ -26,17 +26,462 @@
           "status": "New",
           "start_time": "2025-04-04T12:32:47.885000+10:00",
           "end_time": "2025-04-04T13:01:41.598000+10:00"
-        }
-      ],
-      "reservations": [
+        },
         {
-          "id": 1789,
-          "name_for_reservation": "Алина",
-          "num_people": 4,
-          "phone_number": "+79999999999",
-          "status": "Новая",
-          "seating_time": "2025-04-04T12:32:47.885000+10:00",
-          "end_time": "2025-04-04T13:01:41.598000+10:00"
+          "id": "f2c15b67-2c0c-43de-b6e7-16b12cf94cb1",
+          "status": "Bill",
+          "start_time": "2025-04-04T11:10:00.000000+10:00",
+          "end_time": "2025-04-04T11:45:00.000000+10:00"
+        },
+        {
+          "id": "72b48f8c-15ae-4d23-90f7-7ff0cb5a45f5",
+          "status": "Closed",
+          "start_time": "2025-04-04T13:15:00.000000+10:00",
+          "end_time": "2025-04-04T14:05:00.000000+10:00"
+        },
+        {
+          "id": "aa16e9fb-6d2a-44e6-9cc6-08af8f234f4b",
+          "status": "Banquet",
+          "start_time": "2025-04-04T15:20:00.000000+10:00",
+          "end_time": "2025-04-04T15:45:00.000000+10:00"
+        },
+        {
+          "id": "e31f5798-3a19-4c3b-8d54-0b2b0a2a9a77",
+          "status": "Closed",
+          "start_time": "2025-04-04T16:00:00.000000+10:00",
+          "end_time": "2025-04-04T16:40:00.000000+10:00"
+        },
+        {
+          "id": "d45ac927-7f59-45ff-9b9e-2bafec119c7f",
+          "status": "Bill",
+          "start_time": "2025-04-04T17:10:00.000000+10:00",
+          "end_time": "2025-04-04T18:00:00.000000+10:00"
+        },
+        {
+          "id": "c4a51228-622d-49cf-8aeb-514df8c5a9a1",
+          "status": "Banquet",
+          "start_time": "2025-04-04T19:00:00.000000+10:00",
+          "end_time": "2025-04-04T19:35:00.000000+10:00"
+        },
+        {
+          "id": "a6c2a47a-2b5f-47e8-86b0-48dfcb4a03c4",
+          "status": "New",
+          "start_time": "2025-04-04T20:15:00.000000+10:00",
+          "end_time": "2025-04-04T21:00:00.000000+10:00"
+        }
+      ]
+    },
+    {
+      "id": "2f8d87f1-7e2b-44ad-a99f-3b8dc39a1001",
+      "capacity": 2,
+      "number": "1",
+      "zone": "1 этаж",
+      "orders": [
+        {
+          "id": "a1c2e3d4-5f67-890a-bc12-d3e5567a1002",
+          "status": "New",
+          "start_time": "2025-04-05T11:30:00+10:00",
+          "end_time": "2025-04-05T12:30:00+10:00"
+        },
+        {
+          "id": "b2d3e4f5-6a78-901b-cd23-e4f5678b1003",
+          "status": "Bill",
+          "start_time": "2025-04-05T12:00:00+10:00",
+          "end_time": "2025-04-05T13:15:00+10:00"
+        },
+        {
+          "id": "c3e4f5g6-7b89-012c-de34-f5g6789c1004",
+          "status": "Closed",
+          "start_time": "2025-04-05T13:00:00+10:00",
+          "end_time": "2025-04-05T14:45:00+10:00"
+        },
+        {
+          "id": "d4f5g6h7-8c90-123d-ef45-g6h7890d1005",
+          "status": "Banquet",
+          "start_time": "2025-04-05T18:10:00+10:00",
+          "end_time": "2025-04-05T20:00:00+10:00"
+        },
+        {
+          "id": "e5g6h7i8-9d01-234e-fg56-h7i8901e1006",
+          "status": "Bill",
+          "start_time": "2025-04-05T19:00:00+10:00",
+          "end_time": "2025-04-05T21:15:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "5c7b0e1d-15a6-47c1-83f1-531d4a7a1002",
+      "capacity": 6,
+      "number": "2",
+      "zone": "2 этаж",
+      "orders": [
+        {
+          "id": "a1c2e3d4-5f67-890a-bc12-d3e4567b1002",
+          "status": "Bill",
+          "start_time": "2025-04-05T18:10:00+10:00",
+          "end_time": "2025-04-05T19:45:00+10:00"
+        },
+        {
+          "id": "a1c2e3d4-5f67-890a-bc12-d3e4567a1022",
+          "status": "Closed",
+          "start_time": "2025-04-05T12:00:00+10:00",
+          "end_time": "2025-04-05T16:00:00+10:00"
+        },
+        {
+          "id": "b2d3e4f5-6a78-901b-cd23-e4f5678b1003",
+          "status": "Closed",
+          "start_time": "2025-04-05T12:45:00+10:00",
+          "end_time": "2025-04-05T14:00:00+10:00"
+        },
+        {
+          "id": "c3e4f5g6-7b89-012c-de34-f5g6789c1004",
+          "status": "Banquet",
+          "start_time": "2025-04-05T14:10:00+10:00",
+          "end_time": "2025-04-05T15:50:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "7d6e8a9f-21b3-4c55-bcdd-7f8123a1003",
+      "capacity": 4,
+      "number": "3",
+      "zone": "Банкетный зал",
+      "orders": [
+        {
+          "id": "b2d3e4f5-6789-012a-bc34-e5f6789a1003",
+          "status": "Banquet",
+          "start_time": "2025-04-10T12:00:00+10:00",
+          "end_time": "2025-04-10T17:00:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "9a87b6c5-4d3e-21f0-8a9c-7f6543a1004",
+      "capacity": 8,
+      "number": "4",
+      "zone": "Банкетный зал",
+      "orders": [
+        {
+          "id": "c3e4f5g6-7890-123a-bc45-f67890a1004",
+          "status": "Closed",
+          "start_time": "2025-04-03T14:00:00+10:00",
+          "end_time": "2025-04-03T16:30:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "11aa22bb-33cc-44dd-55ee-66ff77a1005",
+      "capacity": 2,
+      "number": "5",
+      "zone": "1 этаж",
+      "orders": [
+        {
+          "id": "a1c2e3d4-5f67-890a-bc12-d3e4567a1012",
+          "status": "Banquet",
+          "start_time": "2025-04-05T14:45:00+10:00",
+          "end_time": "2025-04-05T16:00:00+10:00"
+        },
+        {
+          "id": "b2d3e4f5-6a78-901b-cd23-e4f5678b1003",
+          "status": "Closed",
+          "start_time": "2025-04-05T14:50:00+10:00",
+          "end_time": "2025-04-05T16:05:00+10:00"
+        },
+        {
+          "id": "c3e4f5g6-7b89-012c-de34-f5g6789c1004",
+          "status": "Closed",
+          "start_time": "2025-04-05T15:00:00+10:00",
+          "end_time": "2025-04-05T16:00:00+10:00"
+        },
+        {
+          "id": "d4f5g6h7-8c90-123d-ef45-g6h7890d1005",
+          "status": "Closed",
+          "start_time": "2025-04-05T15:10:00+10:00",
+          "end_time": "2025-04-05T16:25:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "22bb33cc-44dd-55ee-66ff-77gg88a1006",
+      "capacity": 4,
+      "number": "6",
+      "zone": "2 этаж",
+      "orders": [
+        {
+          "id": "a1c2e3d4-5f67-890a-bc12-d3e4567a1002",
+          "status": "Closed",
+          "start_time": "2025-04-05T12:00:00+10:00",
+          "end_time": "2025-04-05T14:30:00+10:00"
+        },
+        {
+          "id": "b2d3e4f5-7878-901b-cd23-e4f5678b1003",
+          "status": "Closed",
+          "start_time": "2025-04-05T13:00:00+10:00",
+          "end_time": "2025-04-05T14:00:00+10:00"
+        },
+        {
+          "id": "c3e4f5g6-7b89-012c-de34-f5g6789c1004",
+          "status": "Closed",
+          "start_time": "2025-04-05T13:00:00+10:00",
+          "end_time": "2025-04-05T14:00:00+10:00"
+        },
+        {
+          "id": "d4f5g6h7-8c90-123d-ef45-g6h7890d1005",
+          "status": "Closed",
+          "start_time": "2025-04-05T13:00:00+10:00",
+          "end_time": "2025-04-05T14:00:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "33cc44dd-55ee-66ff-77gg-88hh99a1007",
+      "capacity": 10,
+      "number": "7",
+      "zone": "Банкетный зал",
+      "orders": [
+        {
+          "id": "a1c2e3d4-5f67-890a-bc52-d3e4567a1002",
+          "status": "Closed",
+          "start_time": "2025-04-05T12:00:00+10:00",
+          "end_time": "2025-04-05T14:00:00+10:00"
+        },
+        {
+          "id": "b2d3e4f5-6a78-901b-cd23-e4f5678b1003",
+          "status": "New",
+          "start_time": "2025-04-05T12:00:00+10:00",
+          "end_time": "2025-04-05T14:30:00+10:00"
+        },
+        {
+          "id": "c3e4f5g6-7b89-012c-de34-f5g6789c1004",
+          "status": "Closed",
+          "start_time": "2025-04-05T13:30:00+10:00",
+          "end_time": "2025-04-05T15:00:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "44dd55ee-66ff-77gg-88hh-99ii00a1008",
+      "capacity": 6,
+      "number": "8",
+      "zone": "1 этаж",
+      "orders": [
+        {
+          "id": "a1c2e3d4-5f67-890a-af23-d3e4567a1002",
+          "status": "Closed",
+          "start_time": "2025-04-05T12:00:00+10:00",
+          "end_time": "2025-04-05T16:00:00+10:00"
+        },
+        {
+          "id": "b2d3e4f5-6a78-901b-cd23-e4f5678b1003",
+          "status": "Closed",
+          "start_time": "2025-04-05T12:45:00+10:00",
+          "end_time": "2025-04-05T14:00:00+10:00"
+        },
+        {
+          "id": "c3e4f5g6-7b89-012c-de34-f5g6789c1004",
+          "status": "Closed",
+          "start_time": "2025-04-05T13:25:00+10:00",
+          "end_time": "2025-04-05T14:25:00+10:00"
+        },
+        {
+          "id": "d4f5g6h7-8c90-123d-ef45-g6h7890d1005",
+          "status": "Closed",
+          "start_time": "2025-04-05T13:30:00+10:00",
+          "end_time": "2025-04-05T14:30:00+10:00"
+        },
+        {
+          "id": "e5g6h7i8-9d01-234e-fg56-h7i8901e1006",
+          "status": "Closed",
+          "start_time": "2025-04-05T13:40:00+10:00",
+          "end_time": "2025-04-05T14:35:00+10:00"
+        },
+        {
+          "id": "f6h7i8j9-0e12-345f-gh67-i8j9012f1007",
+          "status": "Closed",
+          "start_time": "2025-04-05T15:00:00+10:00",
+          "end_time": "2025-04-05T16:40:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "55ee66ff-77gg-88hh-99ii-00jj11a1009",
+      "capacity": 2,
+      "number": "9",
+      "zone": "2 этаж",
+      "orders": [
+        {
+          "id": "f6g7h8i9-0123-456a-bc78-901234a1009",
+          "status": "Bill",
+          "start_time": "2025-04-07T13:20:00+10:00",
+          "end_time": "2025-04-07T14:00:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "66ff77gg-88hh-99ii-00jj-11kk22a1010",
+      "capacity": 4,
+      "number": "10",
+      "zone": "1 этаж",
+      "orders": [
+        {
+          "id": "g7h8i9j0-1234-567a-bc89-012345a1010",
+          "status": "Closed",
+          "start_time": "2025-04-02T19:00:00+10:00",
+          "end_time": "2025-04-02T20:30:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "77gg88hh-99ii-00jj-11kk-22ll33a1011",
+      "capacity": 12,
+      "number": "11",
+      "zone": "Банкетный зал",
+      "orders": []
+    },
+    {
+      "id": "88hh99ii-00jj-11kk-22ll-33mm44a1012",
+      "capacity": 6,
+      "number": "12",
+      "zone": "2 этаж",
+      "orders": [
+        {
+          "id": "h8i9j0k1-2345-678a-bc90-123456a1012",
+          "status": "Banquet",
+          "start_time": "2025-04-15T12:00:00+10:00",
+          "end_time": "2025-04-15T15:30:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "99ii00jj-11kk-22ll-33mm-44nn55a1013",
+      "capacity": 2,
+      "number": "13",
+      "zone": "1 этаж",
+      "orders": []
+    },
+    {
+      "id": "00jj11kk-22ll-33mm-44nn-55oo66a1014",
+      "capacity": 4,
+      "number": "14",
+      "zone": "2 этаж",
+      "orders": [
+        {
+          "id": "i9j0k1l2-3456-789a-bc01-234567a1014",
+          "status": "New",
+          "start_time": "2025-04-08T20:00:00+10:00",
+          "end_time": "2025-04-08T21:00:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "11kk22ll-33mm-44nn-55oo-66pp77a1015",
+      "capacity": 8,
+      "number": "15",
+      "zone": "Банкетный зал",
+      "orders": [
+        {
+          "id": "j0k1l2m3-4567-890a-bc12-345678a1015",
+          "status": "Closed",
+          "start_time": "2025-04-01T15:00:00+10:00",
+          "end_time": "2025-04-01T18:00:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "22ll33mm-44nn-55oo-66pp-77qq88a1016",
+      "capacity": 6,
+      "number": "16",
+      "zone": "2 этаж",
+      "orders": []
+    },
+    {
+      "id": "33mm44nn-55oo-66pp-77qq-88rr99a1017",
+      "capacity": 2,
+      "number": "17",
+      "zone": "1 этаж",
+      "orders": [
+        {
+          "id": "k1l2m3n4-5678-901a-bc23-456789a1017",
+          "status": "Bill",
+          "start_time": "2025-04-09T14:45:00+10:00",
+          "end_time": "2025-04-09T15:30:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "44nn55oo-66pp-77qq-88rr-99ss00a1018",
+      "capacity": 4,
+      "number": "18",
+      "zone": "2 этаж",
+      "orders": []
+    },
+    {
+      "id": "55oo66pp-77qq-88rr-99ss-00tt11a1019",
+      "capacity": 10,
+      "number": "19",
+      "zone": "Банкетный зал",
+      "orders": [
+        {
+          "id": "l2m3n4o5-6789-012a-bc34-567890a1019",
+          "status": "Banquet",
+          "start_time": "2025-04-20T18:00:00+10:00",
+          "end_time": "2025-04-20T23:30:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "66pp77qq-88rr-99ss-00tt-11uu22a1020",
+      "capacity": 2,
+      "number": "20",
+      "zone": "1 этаж",
+      "orders": []
+    },
+    {
+      "id": "77qq88rr-99ss-00tt-11uu-22vv33a1021",
+      "capacity": 4,
+      "number": "21",
+      "zone": "2 этаж",
+      "orders": [
+        {
+          "id": "m3n4o5p6-7890-123a-bc45-678901a1021",
+          "status": "Closed",
+          "start_time": "2025-04-05T17:00:00+10:00",
+          "end_time": "2025-04-05T18:00:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "88rr99ss-00tt-11uu-22vv-33ww44a1022",
+      "capacity": 8,
+      "number": "22",
+      "zone": "Банкетный зал",
+      "orders": []
+    },
+    {
+      "id": "99ss00tt-11uu-22vv-33ww-44xx55a1023",
+      "capacity": 6,
+      "number": "23",
+      "zone": "1 этаж",
+      "orders": [
+        {
+          "id": "n4o5p6q7-8901-234a-bc56-789012a1023",
+          "status": "New",
+          "start_time": "2025-04-11T13:00:00+10:00",
+          "end_time": "2025-04-11T14:10:00+10:00"
+        }
+      ]
+    },
+    {
+      "id": "00tt11uu-22vv-33ww-44xx-55yy66a1024",
+      "capacity": 12,
+      "number": "24",
+      "zone": "Банкетный зал",
+      "orders": [
+        {
+          "id": "o5p6q7r8-9012-345a-bc67-890123a1024",
+          "status": "Banquet",
+          "start_time": "2025-04-25T12:00:00+10:00",
+          "end_time": "2025-04-25T19:00:00+10:00"
         }
       ]
     }

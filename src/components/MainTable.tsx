@@ -1,80 +1,67 @@
 import styled from "styled-components";
-import ExampleTables from "../ExampleTables.json";
 import TablesCeil from "./TablesCeil";
 import Order from "./Order";
 import { toMinutes, getOriginalTime } from "../utils";
-type Times = {
-  restaurant: {
-    opening_time: string;
-    closing_time: string;
-  };
-};
+import { useSelector } from "react-redux";
+import type { RootState } from "../store";
+export default function MainTable() {
+  const orders = useSelector((state: RootState) => state.orders);
 
-const mokdata: Times = {
-  restaurant: {
-    opening_time: "11:00", // Время открытия (на основе этого строится таблица)
-    closing_time: "23:40", // Время закрытия (на основе этого строится таблица)
-  },
-};
+  const opentTimeRestaurant = toMinutes(orders.restaurant.opening_time);
+  const closeTime = toMinutes(orders.restaurant.closing_time);
+  const diff = Math.floor((closeTime - opentTimeRestaurant) / 30);
+  const timeArr: string[] = [];
 
-const opentTimeRestaurant = toMinutes(mokdata.restaurant.opening_time);
-const closeTime = toMinutes(mokdata.restaurant.closing_time);
+  for (let i = opentTimeRestaurant; i < closeTime; i += 30) {
+    const h = String(Math.trunc(i / 60));
+    const m = String(i % 60).padStart(2, "0");
+    const time = `${h}:${m}`;
+    timeArr.push(time);
+  }
+  const Y_SCALE = 40 / 30;
 
-const diff = Math.floor((closeTime - opentTimeRestaurant) / 30);
-const timeArr: string[] = [];
+  const tables = orders.tables;
+  const tablesFormat = tables.map((table) => ({
+    ...table,
+    orders: table.orders.map((order) => ({
+      ...order,
+      overlayLevel: 0,
+      leftLevel: 0,
+      intersectionLevel: 1,
+      startTimeMinutes: toMinutes(getOriginalTime(order.start_time)),
+      endTimeMinutes: toMinutes(getOriginalTime(order.end_time)),
+    })),
+  }));
 
-for (let i = opentTimeRestaurant; i < closeTime; i += 30) {
-  const h = String(Math.trunc(i / 60));
-  const m = String(i % 60).padStart(2, "0");
-  const time = `${h}:${m}`;
-  timeArr.push(time);
-}
-const { tables } = ExampleTables;
-const timeScale = 40 / 30;
-
-const tablesFormat = tables.map((table) => ({
-  ...table,
-  orders: table.orders.map((order) => ({
-    ...order,
-    overlayLevel: 0,
-    leftLevel: 0,
-    intersectionLevel: 0,
-    startTimeMinutes: toMinutes(getOriginalTime(order.start_time)),
-    endTimeMinutes: toMinutes(getOriginalTime(order.end_time)),
-  })),
-}));
-
-for (let i = 0; i < tablesFormat.length; i++) {
-  for (let j = 0; j < tablesFormat[i].orders.length; j++) {
-    const currentOrder = tablesFormat[i].orders[j];
-    for (let x = j + 1; x < tablesFormat[i].orders.length; x++) {
-      const anotherOrder = tablesFormat[i].orders[x];
-      if (
-        currentOrder.startTimeMinutes < anotherOrder.endTimeMinutes &&
-        currentOrder.endTimeMinutes > anotherOrder.startTimeMinutes
-      ) {
-        anotherOrder.overlayLevel = currentOrder.overlayLevel + 1;
+  for (let i = 0; i < tablesFormat.length; i++) {
+    const orders = tablesFormat[i].orders;
+    for (let j = 0; j < orders.length; j++) {
+      const currentOrder = orders[j];
+      for (let x = j + 1; x < orders.length; x++) {
+        const anotherOrder = orders[x];
+        if (
+          currentOrder.startTimeMinutes < anotherOrder.endTimeMinutes &&
+          currentOrder.endTimeMinutes > anotherOrder.startTimeMinutes
+        ) {
+          anotherOrder.overlayLevel = currentOrder.overlayLevel + 1;
+        }
+        if (anotherOrder.startTimeMinutes - currentOrder.startTimeMinutes < 30) {
+          anotherOrder.leftLevel = currentOrder.leftLevel + 1;
+        }
       }
-      if (anotherOrder.startTimeMinutes - currentOrder.startTimeMinutes < 30) {
-        anotherOrder.leftLevel = currentOrder.leftLevel + 1;
+      let count = 1;
+      for (let k = 0; k < orders.length; k++) {
+        const anotherOrder = orders[k];
+        if (
+          Math.abs(anotherOrder.startTimeMinutes - currentOrder.startTimeMinutes) < 30 &&
+          anotherOrder !== currentOrder
+        ) {
+          count++;
+        }
+        currentOrder.intersectionLevel = count;
       }
-    }
-    let count = 1;
-    for (let k = 0; k < tablesFormat[i].orders.length; k++) {
-      const anotherOrder = tablesFormat[i].orders[k];
-      if (
-        Math.abs(anotherOrder.startTimeMinutes - currentOrder.startTimeMinutes) < 30 &&
-        anotherOrder !== currentOrder
-      ) {
-        count++;
-      }
-      currentOrder.intersectionLevel = count;
     }
   }
-}
-
-console.log(tablesFormat);
-export default function MainTable() {
   return (
     <Wrapper className="container">
       <XWrapper>
@@ -91,7 +78,7 @@ export default function MainTable() {
               return <TablesCeil key={table.id} data={rest}></TablesCeil>;
             })}
           </TableBar>
-          <Board>
+          <Board $rows={diff} $columns={tables.length}>
             {tablesFormat.map((table) =>
               table.orders.map((order) => {
                 const topOffset = order.startTimeMinutes - opentTimeRestaurant;
@@ -102,7 +89,6 @@ export default function MainTable() {
                 if (order.intersectionLevel > 1) {
                   finalWidth = (80 - order.overlayLevel * 4) / order.intersectionLevel;
                   leftOffset = index * 80 + order.leftLevel * finalWidth + order.overlayLevel * 4;
-                  // 5 * 80 + 3 *
                 } else {
                   finalWidth = 80 - order.overlayLevel * 4;
                   leftOffset = index * 80 + order.overlayLevel * 4;
@@ -112,8 +98,8 @@ export default function MainTable() {
                     data={order}
                     key={order.id}
                     style={{
-                      top: `${topOffset * timeScale}px`,
-                      height: `${heightOrder * timeScale}px`,
+                      top: `${topOffset * Y_SCALE}px`,
+                      height: `${heightOrder * Y_SCALE}px`,
                       left: `${leftOffset}px`,
                       width: `${finalWidth}px`,
                     }}
@@ -144,7 +130,7 @@ const YWrapper = styled.div`
   flex-direction: column;
   height: fit-content;
 `;
-const Board = styled.div`
+const Board = styled.div<{ $rows: number; $columns: number }>`
   display: grid;
   background-attachment: local;
   position: relative;
@@ -152,8 +138,8 @@ const Board = styled.div`
     linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 80px 40px, 80px 40px;
   background-position: 80px 0, 0 40px;
-  grid-template-rows: repeat(${diff + 1}, 40px);
-  grid-template-columns: repeat(${tables.length}, 80px);
+  grid-template-rows: ${({ $rows }) => `repeat(${$rows + 1}, 40px)`};
+  grid-template-columns: ${({ $columns }) => `repeat(${$columns}, 80px)`};
 `;
 const XWrapper = styled.div`
   display: flex;
