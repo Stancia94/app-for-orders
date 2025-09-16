@@ -12,7 +12,6 @@ export default function DateFilter() {
   return (
     <Wrapper>
       <FilterName>Дата</FilterName>
-      {selectedDate}
       <List>
         {availableDays.map((date) => {
           return (

@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import ordersReducer from "./sliceOrders";
-import rawMokData from "./MokData.json";
+// import rawMokData from "./MokData.json";
+import rawMokData from "./MokDataAllDays.json";
 import type { OrdersState } from "./sliceOrders";
 const MokData = rawMokData as Omit<OrdersState, "selected_zone" | "available_zone">;
 
@@ -11,7 +12,7 @@ export const store = configureStore({
   preloadedState: {
     orders: {
       ...MokData,
-      selected_zone: "",
+      selected_zone: [],
       available_zone: [],
     }
   }

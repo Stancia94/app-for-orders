@@ -27,7 +27,7 @@ export type OrdersState = {
   current_day: string;
   restaurant: Restaurant;
   tables: Table[];
-  selected_zone: string;
+  selected_zone: string[];
   available_zone: string[];
 };
 
@@ -36,7 +36,7 @@ const initialState: OrdersState = {
   current_day: "",
   restaurant: {} as Restaurant,
   tables: [] as Table[],
-  selected_zone: "",
+  selected_zone: [],
   available_zone: [],
 };
 export const ordersSlice = createSlice({
@@ -53,12 +53,17 @@ export const ordersSlice = createSlice({
       state.available_zone = action.payload;
     },
     setSelectedZone: (state, action: PayloadAction<string>) => {
-      state.selected_zone = action.payload;
+      const findIndex = state.selected_zone.findIndex((zone) => zone === action.payload);
+      if (findIndex === -1) {
+        state.selected_zone.push(action.payload);
+      } else {
+        state.selected_zone.splice(findIndex, 1);
+      }
     },
     setDate: (state, action: PayloadAction<string>) => {
       state.current_day = action.payload;
     },
   },
 });
-export const { setDate, setReservations, setSelectedZone } = ordersSlice.actions;
+export const { setDate, setReservations, setSelectedZone, setAvailableZone } = ordersSlice.actions;
 export default ordersSlice.reducer;

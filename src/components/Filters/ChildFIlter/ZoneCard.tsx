@@ -1,4 +1,13 @@
 import { Card } from "../../FilterPanel";
-export default function ZoneCard() {
-  return <Card>1 этаж</Card>;
+type ZoneCardProps = {
+  zone: string;
+  onClick: () => void;
+  isActive: boolean;
+};
+export default function ZoneCard({ zone, onClick, isActive }: ZoneCardProps) {
+  return (
+    <Card onClick={onClick} $active={isActive}>
+      {zone}
+    </Card>
+  );
 }

@@ -2,13 +2,19 @@ import styled from "styled-components";
 import TablesCeil from "./TablesCeil";
 import Order from "./Order";
 import { toMinutes, getOriginalTime } from "../utils";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store";
+import { setAvailableZone } from "../sliceOrders";
+import { useEffect } from "react";
 export default function MainTable() {
-  const orders = useSelector((state: RootState) => state.orders);
+  const state = useSelector((state: RootState) => state.orders);
+  const tables = state.tables;
+  const Y_SCALE = 40 / 30;
 
-  const opentTimeRestaurant = toMinutes(orders.restaurant.opening_time);
-  const closeTime = toMinutes(orders.restaurant.closing_time);
+  const dispatch = useDispatch();
+  const opentTimeRestaurant = toMinutes(state.restaurant.opening_time);
+  const closeTime = toMinutes(state.restaurant.closing_time);
+
   const diff = Math.floor((closeTime - opentTimeRestaurant) / 30);
   const timeArr: string[] = [];
 
@@ -18,21 +24,33 @@ export default function MainTable() {
     const time = `${h}:${m}`;
     timeArr.push(time);
   }
-  const Y_SCALE = 40 / 30;
 
-  const tables = orders.tables;
-  const tablesFormat = tables.map((table) => ({
+  const availableZone = new Set<string>();
+  const tablesSortDate = tables.map((table) => ({
     ...table,
-    orders: table.orders.map((order) => ({
-      ...order,
-      overlayLevel: 0,
-      leftLevel: 0,
-      intersectionLevel: 1,
-      startTimeMinutes: toMinutes(getOriginalTime(order.start_time)),
-      endTimeMinutes: toMinutes(getOriginalTime(order.end_time)),
-    })),
+    orders: table.orders.filter((order) => order.start_time.includes(state.current_day)),
   }));
+  let tablesFormat = tablesSortDate.map((table) => {
+    availableZone.add(table.zone);
+    return {
+      ...table,
+      orders: table.orders.map((order) => ({
+        ...order,
+        overlayLevel: 0,
+        leftLevel: 0,
+        intersectionLevel: 1,
+        startTimeMinutes: toMinutes(getOriginalTime(order.start_time)),
+        endTimeMinutes: toMinutes(getOriginalTime(order.end_time)),
+      })),
+    };
+  });
+  useEffect(() => {
+    dispatch(setAvailableZone(Array.from(availableZone)));
+  }, [tables, dispatch]);
 
+  tablesFormat = tablesFormat.sort((a, b) => {
+    return state.selected_zone.indexOf(b.zone) - state.selected_zone.indexOf(a.zone);
+  });
   for (let i = 0; i < tablesFormat.length; i++) {
     const orders = tablesFormat[i].orders;
     for (let j = 0; j < orders.length; j++) {
@@ -72,7 +90,7 @@ export default function MainTable() {
         </TimeBar>
         <YWrapper>
           <TableBar>
-            {tables.map((table) => {
+            {tablesFormat.map((table) => {
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               const { orders, ...rest } = table;
               return <TablesCeil key={table.id} data={rest}></TablesCeil>;
@@ -84,7 +102,7 @@ export default function MainTable() {
                 const topOffset = order.startTimeMinutes - opentTimeRestaurant;
                 const heightOrder = order.endTimeMinutes - order.startTimeMinutes;
                 // в 40 пикселях 30 минут => 1минута = 40/30
-                const index = tables.findIndex((el) => el.id === table.id);
+                const index = tablesFormat.findIndex((el) => el.id === table.id);
                 let finalWidth, leftOffset;
                 if (order.intersectionLevel > 1) {
                   finalWidth = (80 - order.overlayLevel * 4) / order.intersectionLevel;
